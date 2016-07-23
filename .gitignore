@@ -11,7 +11,7 @@ robots.txt
 /CHANGELOG.txt
 /COPYRIGHT.txt
 /INSTALL*.txt
-/LICENSE.txt
+# /LICENSE.txt except these
 /MAINTAINERS.txt
 /UPGRADE.txt
 /README.txt
