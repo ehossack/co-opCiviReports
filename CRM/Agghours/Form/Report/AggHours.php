@@ -23,6 +23,15 @@ class CRM_Agghours_Form_Report_AggHours extends CRM_Extendedreport_Form_Report_E
    * Class constructor.
    */
   public function __construct() {
+ 	$columnOneTitle = 'Total Hours Winter 2016';
+	$columnOneStart = '2015-11-10';
+	$columnOneEnd = '2016-03-08';
+
+	$columnTwoTitle = 'Total Hours Summer 2017';
+	$columnTwoStart = '2016-03-08';
+	$columnTwoEnd = '2016-11-08';
+
+
     $this->_autoIncludeIndexedFieldsAsOrderBys = 1;
 
     // Check if CiviCampaign is a) enabled and b) has active campaigns
@@ -163,7 +172,7 @@ class CRM_Agghours_Form_Report_AggHours extends CRM_Extendedreport_Form_Report_E
             // bikecoop: actual_volunteer_time_halves_13
               array('actual_volunteer_time_halves_13' =>
                 array(
-                  'title' => ts('Most Recent Volunteer Hours'),
+                  'title' => ts('Volunteer Hours'),
                   'default' => TRUE,
                 ),
               ),
@@ -182,21 +191,21 @@ class CRM_Agghours_Form_Report_AggHours extends CRM_Extendedreport_Form_Report_E
             ),
             // KG
             'agg_hours16' => array(
-              'title' => ts('Aggregate Volunteer Hours 2016'),
+              'title' => ts($columnOneTitle),
               'required' => TRUE,
               //  drupal7.local:
               // 'dbAlias' => "SUM(CASE WHEN year(event_civireport.start_date)=2016 THEN value_events_participants_17_civireport.volunteer_hours_57 ELSE 0 END)",
               //  bikecoop:
-              'dbAlias' => "SUM(CASE WHEN year(event_civireport.start_date)=2016 THEN value_events_participants_4_civireport.actual_volunteer_time_halves_13 ELSE 0 END)",
+              'dbAlias' => "SUM(CASE WHEN DATE(event_civireport.start_date) BETWEEN DATE('$columnOneStart') AND DATE('$columnOneEnd') THEN value_events_participants_4_civireport.actual_volunteer_time_halves_13 ELSE 0 END)",
             ),
             // KG
             'agg_hours15' => array(
-              'title' => ts('Aggregate Volunteer Hours 2015'),
+              'title' => ts($columnTwoTitle),
               'required' => TRUE,
               //  drupal7.local:
               // 'dbAlias' => "SUM(CASE WHEN year(event_civireport.start_date)=2015 THEN value_events_participants_17_civireport.volunteer_hours_57 ELSE 0 END)",
               //  bikecoop:
-              'dbAlias' => "SUM(CASE WHEN year(event_civireport.start_date)=2015 THEN value_events_participants_4_civireport.actual_volunteer_time_halves_13 ELSE 0 END)",
+              'dbAlias' => "SUM(CASE WHEN DATE(event_civireport.start_date) BETWEEN DATE('$columnTwoStart') AND DATE('$columnTwoEnd')THEN value_events_participants_4_civireport.actual_volunteer_time_halves_13 ELSE 0 END)",
             ),
             'event_id' => array(
               'default' => TRUE,
@@ -674,10 +683,11 @@ GROUP BY  cv.label
         $participantTitle = ts('View Participant Record');
 
         $rows[$rowNum]['civicrm_contact_sort_name'] = "<a title='$contactTitle' href=$url>$displayName</a>";
-        if ($this->_outputMode !== 'csv' && $this->_outputMode !== 'pdf' && $this->_outputMode !== 'print') {
-          $rows[$rowNum]['civicrm_contact_sort_name'] .= "<span style='float: right;'>
-          <a title='$participantTitle' href=$viewUrl> " . ts('View') . "</a></span>";
-        }
+        // Optional link to participant record
+        // if ($this->_outputMode !== 'csv' && $this->_outputMode !== 'pdf' && $this->_outputMode !== 'print') {
+        //   $rows[$rowNum]['civicrm_contact_sort_name'] .= "<span style='float: right;'>
+        //   <a title='$participantTitle' href=$viewUrl> " . ts('View') . "</a></span>";
+        // }
         $entryFound = TRUE;
       }
 
