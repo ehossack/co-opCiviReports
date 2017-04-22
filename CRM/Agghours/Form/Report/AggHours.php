@@ -24,12 +24,12 @@ class CRM_Agghours_Form_Report_AggHours extends CRM_Extendedreport_Form_Report_E
    */
   public function __construct() {
  	$columnOneTitle = 'Total Hours Winter 2016';
-	$columnOneStart = '2015-11-10';
-	$columnOneEnd = '2016-03-08';
+	$columnOneStart = '2016-11-09';
+	$columnOneEnd = '2017-03-14';
 
 	$columnTwoTitle = 'Total Hours Summer 2017';
-	$columnTwoStart = '2016-03-08';
-	$columnTwoEnd = '2016-11-08';
+	$columnTwoStart = '2017-03-15';
+	$columnTwoEnd = '2017-11-07';
 
 
     $this->_autoIncludeIndexedFieldsAsOrderBys = 1;
